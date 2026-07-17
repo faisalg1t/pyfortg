@@ -22,7 +22,7 @@ async def test_text_filter_exact_match():
     message = Message(message_id=1, date=123, chat=chat, text="hello")
     update = Update(update_id=1, message=message)
     
-    assert await filter_obj.check(message) is True
+    assert await filter_obj.check(update) is True
 
 
 @pytest.mark.asyncio
@@ -33,8 +33,9 @@ async def test_text_filter_pattern():
     user = User(id=1, is_bot=False, first_name="Test")
     chat = Chat(id=1, type="private")
     message = Message(message_id=1, date=123, chat=chat, text="123")
-    
-    assert await filter_obj.check(message) is True
+    update = Update(update_id=1, message=message)
+
+    assert await filter_obj.check(update) is True
 
 
 @pytest.mark.asyncio
@@ -45,8 +46,9 @@ async def test_command_filter():
     user = User(id=1, is_bot=False, first_name="Test")
     chat = Chat(id=1, type="private")
     message = Message(message_id=1, date=123, chat=chat, text="/start")
+    update = Update(update_id=1, message=message)
     
-    assert await filter_obj.check(message) is True
+    assert await filter_obj.check(update) is True
 
 
 @pytest.mark.asyncio
@@ -57,8 +59,9 @@ async def test_private_chat_filter():
     user = User(id=1, is_bot=False, first_name="Test")
     chat = Chat(id=1, type="private")
     message = Message(message_id=1, date=123, chat=chat)
+    update = Update(update_id=1, message=message)
     
-    assert await filter_obj.check(message) is True
+    assert await filter_obj.check(update) is True
 
 
 @pytest.mark.asyncio
@@ -69,8 +72,9 @@ async def test_group_chat_filter():
     user = User(id=1, is_bot=False, first_name="Test")
     chat = Chat(id=-1, type="supergroup")
     message = Message(message_id=1, date=123, chat=chat)
+    update = Update(update_id=1, message=message)
     
-    assert await filter_obj.check(message) is True
+    assert await filter_obj.check(update) is True
 
 
 @pytest.mark.asyncio
@@ -81,5 +85,6 @@ async def test_filter_combination():
     user = User(id=1, is_bot=False, first_name="Test")
     chat = Chat(id=1, type="private")
     message = Message(message_id=1, date=123, chat=chat, text="hello world")
+    update = Update(update_id=1, message=message)
     
-    assert await filter_obj.check(message) is True
+    assert await filter_obj.check(update) is True
